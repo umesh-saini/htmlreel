@@ -1,0 +1,82 @@
+<!doctype html>
+<!--
+  A 6-second YouTube intro, made of plain HTML + CSS keyframes.
+    npx htmlreel render examples/youtube-intro/index.html --preset youtube --duration 6
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #090b14; font-family: Inter, system-ui, sans-serif; color: #fff; }
+
+  /* --p is 0..1 over the whole video: the light drifts slowly from start to end. */
+  .bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(45% 60% at calc(25% + var(--p) * 25%) 35%, rgba(109, 93, 252, .55), transparent 70%),
+      radial-gradient(40% 55% at calc(80% - var(--p) * 20%) 70%, rgba(255, 92, 138, .45), transparent 70%),
+      #090b14;
+  }
+  .grid {
+    position: absolute; inset: 0; opacity: .14;
+    background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px);
+    background-size: 80px 80px;
+    transform: perspective(900px) rotateX(58deg) translateY(calc(var(--t) * 40px)) scale(2.2);
+    transform-origin: 50% 100%;
+    mask-image: linear-gradient(transparent 30%, #000 75%);
+  }
+
+  .scene { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+
+  .kicker {
+    font: 700 28px/1 Inter, sans-serif; letter-spacing: .35em; text-transform: uppercase; color: #b9b3ff;
+    animation: rise .8s cubic-bezier(.2, .8, .2, 1) .2s both;
+  }
+  h1 { margin: 28px 0 0; font-size: 150px; line-height: 1; font-weight: 900; letter-spacing: -.04em; }
+  h1 span {
+    display: inline-block; margin: 0 .12em;
+    animation: pop .9s cubic-bezier(.2, 1.4, .3, 1) both;
+    animation-delay: calc(.45s + var(--i) * .14s);
+  }
+  h1 .hl { background: linear-gradient(90deg, #8f7dff, #ff6f9c); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .bar {
+    height: 10px; width: 520px; margin: 36px auto 0; border-radius: 10px;
+    background: linear-gradient(90deg, #8f7dff, #ff6f9c);
+    transform-origin: left; animation: grow 1s cubic-bezier(.6, 0, .2, 1) 1.3s both;
+  }
+  .sub { margin-top: 34px; font: 500 40px/1.3 Inter, sans-serif; color: #c9cbe0; animation: rise .8s ease 2s both; }
+
+  /* Scene 1 leaves at 4.4s. Animation times inside a [data-start] element count from its start. */
+  .out { animation: leave .6s cubic-bezier(.7, 0, .8, .3) 3.8s both; }
+
+  .logo { font-size: 120px; font-weight: 900; letter-spacing: -.04em; animation: zoom 1s cubic-bezier(.2, .9, .2, 1) both; }
+  .logo b { color: #ff6f9c; }
+  .tag { margin-top: 18px; font: 500 34px Inter, sans-serif; color: #b9b3ff; animation: rise .7s ease .35s both; }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+  @keyframes pop { from { opacity: 0; transform: translateY(90px) scale(.6) rotate(6deg); } to { opacity: 1; transform: none; } }
+  @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes leave { to { opacity: 0; transform: scale(1.15); filter: blur(12px); } }
+  @keyframes zoom { from { opacity: 0; transform: scale(.7); letter-spacing: .2em; } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="grid"></div>
+
+  <section class="scene" data-start="0" data-duration="4.4">
+    <div class="out">
+      <div class="kicker">Episode 12</div>
+      <h1><span style="--i:0">Videos</span><span style="--i:1">from</span><br><span class="hl" style="--i:2">HTML</span><span class="hl" style="--i:3">&amp;</span><span class="hl" style="--i:4">CSS</span></h1>
+      <div class="bar"></div>
+      <div class="sub">No timeline. No video editor. Just code.</div>
+    </div>
+  </section>
+
+  <section class="scene" data-start="4.4" data-duration="1.6">
+    <div class="logo">html<b>reel</b></div>
+    <div class="tag">YouTube · Shorts · Reels · TikTok</div>
+  </section>
+</body>
+</html>

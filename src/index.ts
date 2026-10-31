@@ -1,0 +1,12 @@
+export { renderVideo, renderStill, renderStills, preview, frameVariance, isBlankFrame } from './render.js';
+export type { AudioOptions, CompositionOptions, RenderProgress, RenderResult, RenderVideoOptions, StillOptions } from './render.js';
+export { buildHtml, runtimeScript } from './html.js';
+export type { Caption, ReelConfig } from './html.js';
+export { parseSubtitles, captionsFromText } from './captions.js';
+export { computeLevels, levelsFromPcm, findPeakWindow } from './audio.js';
+export { PRESETS, preset } from './presets.js';
+export type { PresetName } from './presets.js';
+export { BROWSER_CACHE_DIR, binaryArch, findHeadlessShell, launchBrowser, launchHelp, openComposition, resolveChrome, serve } from './browser.js';
+export type { BrowserOptions, CompositionPage, Engine, NetworkPolicy, OpenOptions, ServeOptions } from './browser.js';
+export { ffmpegPath, probe, probeDuration } from './ffmpeg.js';
+export type { MediaInfo } from './ffmpeg.js';

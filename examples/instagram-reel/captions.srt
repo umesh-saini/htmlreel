@@ -1,0 +1,15 @@
+1
+00:00:00,200 --> 00:00:02,500
+Three CSS tricks you will use every day
+
+2
+00:00:02,700 --> 00:00:05,000
+One: grid and place items center
+
+3
+00:00:05,200 --> 00:00:07,500
+Two: clamp makes your text fluid
+
+4
+00:00:07,700 --> 00:00:09,900
+Three: gradient text with background clip

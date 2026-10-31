@@ -1,0 +1,73 @@
+<!doctype html>
+<!--
+  A 9:16 Instagram Reel / YouTube Short / TikTok: a hook, three tips, word-by-word captions
+  and a ring that pulses with the music.
+    npx htmlreel render examples/instagram-reel/index.html --preset reel \
+      --audio examples/assets/beat.mp3 --captions examples/instagram-reel/captions.srt --duration 10
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800;900&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; font-family: Inter, system-ui, sans-serif; color: #fff; }
+  body { background: linear-gradient(160deg, hsl(calc(250 + var(--p) * 70), 70%, 18%), hsl(calc(320 + var(--p) * 40), 70%, 10%)); }
+
+  /* Story-style progress bar driven by --p (0..1). */
+  .progress { position: absolute; top: 60px; left: 60px; right: 60px; height: 8px; border-radius: 8px; background: rgba(255, 255, 255, .2); overflow: hidden; }
+  .progress::after { content: ''; position: absolute; inset: 0; background: #fff; transform-origin: left; transform: scaleX(var(--p)); }
+
+  /* The ring breathes with the music: --level is the loudness, --beat a pulse on each hit. */
+  .ring {
+    position: absolute; left: 50%; top: 36%; width: 560px; height: 560px; margin: -280px 0 0 -280px; border-radius: 50%;
+    border: 14px solid rgba(255, 255, 255, calc(.15 + var(--beat) * .6));
+    box-shadow: 0 0 calc(40px + var(--level) * 120px) rgba(255, 120, 200, calc(.25 + var(--level) * .5));
+    transform: scale(calc(.9 + var(--level) * .22));
+  }
+
+  .scene { position: absolute; left: 80px; right: 80px; top: 22%; text-align: center; }
+  .hook { font-size: 150px; font-weight: 900; line-height: .95; letter-spacing: -.04em; animation: slam .7s cubic-bezier(.2, 1.5, .3, 1) both; }
+  .hook small { display: block; margin-top: 30px; font-size: 64px; font-weight: 800; letter-spacing: -.01em; color: #ffd36e; animation: up .6s ease .5s both; }
+
+  .card {
+    margin: 0 auto; padding: 60px 56px; border-radius: 48px; text-align: left;
+    background: rgba(24, 12, 48, .96); border: 2px solid rgba(255, 255, 255, .18); box-shadow: 0 40px 80px rgba(0, 0, 0, .35);
+    animation: card .6s cubic-bezier(.2, .9, .2, 1) both;
+  }
+  .num { width: 120px; height: 120px; border-radius: 34px; display: grid; place-items: center; font-size: 70px; font-weight: 900; background: #ffd36e; color: #1c1033; }
+  .card h2 { margin: 40px 0 16px; font-size: 84px; line-height: 1; letter-spacing: -.03em; }
+  .card p { margin: 0; font: 600 44px/1.35 Inter, sans-serif; color: rgba(255, 255, 255, .8); }
+  .card code { font-size: 36px; white-space: nowrap; padding: 4px 14px; border-radius: 12px; background: rgba(0, 0, 0, .35); color: #ffd36e; }
+
+  .handle { position: absolute; left: 0; right: 0; bottom: 110px; text-align: center; font: 700 40px Inter, sans-serif; opacity: .75; }
+
+  /* Restyle the built-in captions: the word being spoken lights up. */
+  #reel-captions.reel-default { font-family: Inter, system-ui, sans-serif; font-weight: 900; letter-spacing: -.01em; }
+  #reel-captions .reel-word.is-spoken { color: #ffd36e; }
+
+  @keyframes slam { from { opacity: 0; transform: scale(1.8); } to { opacity: 1; transform: none; } }
+  @keyframes up { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+  @keyframes card { from { opacity: 0; transform: translateY(160px) rotate(-3deg); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+  <div class="progress"></div>
+  <div class="ring"></div>
+
+  <section class="scene" data-start="0" data-duration="2.6">
+    <div class="hook">3 CSS tricks<small>you'll use every day</small></div>
+  </section>
+
+  <section class="scene" data-start="2.6" data-duration="2.5">
+    <div class="card"><div class="num">1</div><h2>Center anything</h2><p><code>display: grid;<br>place-items: center;</code></p></div>
+  </section>
+  <section class="scene" data-start="5.1" data-duration="2.5">
+    <div class="card"><div class="num">2</div><h2>Fluid type</h2><p><code>font-size: clamp(1rem, 4vw, 3rem);</code></p></div>
+  </section>
+  <section class="scene" data-start="7.6" data-duration="2.4">
+    <div class="card"><div class="num">3</div><h2>Gradient text</h2><p><code>background-clip: text;</code></p></div>
+  </section>
+
+  <div class="handle">@yourhandle</div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<!--
+  A lyric video / music visualizer. Canvas bars are drawn per frame with Reel.onFrame and
+  Reel.levelAt(t); lyrics come in as captions with karaoke highlighting. Rendered by render.ts.
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;800;900&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #07070c; font-family: Inter, system-ui, sans-serif; color: #fff; }
+  .glow { position: absolute; inset: 0; background: radial-gradient(60% 40% at 50% 42%, hsla(calc(200 + var(--p) * 120), 90%, 55%, calc(.25 + var(--level) * .35)), transparent 70%); }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .title { position: absolute; top: 12%; left: 0; right: 0; text-align: center; }
+  .title h1 { margin: 0; font-size: 9vmin; font-weight: 900; letter-spacing: -.03em; }
+  .title p { margin: 1.5vmin 0 0; font-size: 4vmin; font-weight: 500; opacity: .7; }
+
+  /* Our own caption layout: the runtime fills #reel-captions with .reel-line > .reel-word. */
+  #reel-captions { position: absolute; left: 6%; right: 6%; bottom: 17%; height: 30vmin; }
+  .reel-line { position: absolute; inset: 0; display: flex; flex-wrap: wrap; align-content: center; justify-content: center; opacity: 0; font-size: 8vmin; font-weight: 900; line-height: 1.15; text-align: center; }
+  .reel-line.is-active { opacity: 1; animation: lineIn .4s cubic-bezier(.2, .9, .2, 1) both; }
+  .reel-word { color: rgba(255, 255, 255, .35); }
+  .reel-word.is-spoken { color: #fff; text-shadow: 0 0 3vmin hsla(calc(200 + var(--p) * 120), 90%, 60%, .9); }
+  @keyframes lineIn { from { opacity: 0; transform: translateY(4vmin); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <canvas id="viz"></canvas>
+  <div class="title"><h1 id="song"></h1><p id="artist"></p></div>
+  <div id="reel-captions"></div>
+
+  <script>
+    document.getElementById('song').textContent = Reel.data.title || '';
+    document.getElementById('artist').textContent = Reel.data.artist || '';
+
+    const canvas = document.getElementById('viz');
+    const ctx = canvas.getContext('2d');
+    const W = (canvas.width = Reel.width), H = (canvas.height = Reel.height);
+    const BARS = 48;
+
+    // Called for every frame with the composition time. Everything drawn is a function of t,
+    // so frames are identical no matter which worker renders them.
+    Reel.onFrame((t) => {
+      ctx.clearRect(0, 0, W, H);
+      const cx = W / 2, cy = H * 0.42, r = Math.min(W, H) * 0.22;
+      for (let i = 0; i < BARS; i++) {
+        // Each bar shows the loudness a little further in the past: a rotating echo.
+        const level = Reel.levelAt(Math.max(0, t - i * 0.025));
+        const a = (i / BARS) * Math.PI * 2 + t * 0.3;
+        const len = r * (0.15 + level * 0.9);
+        ctx.strokeStyle = `hsla(${200 + (i / BARS) * 120 + t * 20}, 90%, 65%, ${0.4 + level * 0.6})`;
+        ctx.lineWidth = Math.max(4, W / 140);
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r);
+        ctx.lineTo(cx + Math.cos(a) * (r + len), cy + Math.sin(a) * (r + len));
+        ctx.stroke();
+      }
+    });
+  </script>
+</body>
+</html>

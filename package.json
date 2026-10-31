@@ -1,0 +1,72 @@
+{
+  "name": "htmlreel",
+  "version": "0.1.0",
+  "description": "Render HTML/CSS into MP4 videos for YouTube, Shorts, Instagram Reels and TikTok. Deterministic frame-by-frame capture in headless Chrome, parallel workers, FFmpeg encoding, word-by-word captions and audio-reactive animation.",
+  "keywords": [
+    "html-to-video",
+    "video",
+    "video-generation",
+    "render",
+    "ffmpeg",
+    "puppeteer",
+    "headless-chrome",
+    "css-animation",
+    "instagram-reels",
+    "youtube",
+    "youtube-shorts",
+    "tiktok",
+    "captions",
+    "subtitles",
+    "lyric-video",
+    "motion-graphics",
+    "programmatic-video",
+    "automation"
+  ],
+  "license": "MIT",
+  "author": "Umesh Saini",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umeshsaini8085/htmlreel.git"
+  },
+  "homepage": "https://github.com/umeshsaini8085/htmlreel#readme",
+  "bugs": "https://github.com/umeshsaini8085/htmlreel/issues",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "htmlreel": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./runtime.js": "./dist/runtime/runtime.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && mkdir -p dist/runtime && cp src/runtime/runtime.js dist/runtime/ && chmod +x dist/cli.js",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test test/*.test.ts",
+    "cli": "tsx src/cli.ts",
+    "examples": "tsx scripts/render-examples.ts",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.3.0",
+    "puppeteer-core": "^25.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
