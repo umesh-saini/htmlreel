@@ -290,7 +290,7 @@ Environment variables: `HTMLREEL_CHROME` (browser path), `HTMLREEL_BROWSER_DIR`,
 
 ## Where it comes from
 
-htmlreel is the render engine of **SangeetFlow**, a multi-user YouTube automation platform: AI-designed music and lyric videos, narrated presenter videos and Shorts, rendered and published on a schedule. Its MCP connector (Claude and ChatGPT can create videos in it) is open source too: [mcp-auth-kit](https://github.com/umesh-saini/mcp-auth-kit).
+htmlreel is the render engine of **SangeetFlow**, a multi-user YouTube automation platform: AI-designed music and lyric videos, narrated presenter videos and Shorts, rendered and published on a schedule. Its MCP connector (Claude and ChatGPT can create videos in it) is open source too: [mcp-oauth-starter](https://github.com/umesh-saini/mcp-auth-kit).
 
 ## Contributing
 
