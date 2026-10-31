@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { spawn } from 'node:child_process';
 import { createRequire } from 'node:module';
 
@@ -9,11 +10,25 @@ export function ffmpegPath(): string {
   if (resolvedFfmpeg) return resolvedFfmpeg;
   try {
     const bundled = createRequire(import.meta.url)('ffmpeg-static') as string | null;
-    if (bundled) return (resolvedFfmpeg = bundled);
+    // The binary is downloaded by ffmpeg-static's install script, which npm 12+ skips unless approved.
+    if (bundled && fs.existsSync(bundled)) return (resolvedFfmpeg = bundled);
   } catch {
     // not installed (optional on unsupported platforms)
   }
   return (resolvedFfmpeg = 'ffmpeg');
+}
+
+export const FFMPEG_MISSING_HELP =
+  'ffmpeg not found. The bundled ffmpeg-static binary was not downloaded (npm 12+ blocks install scripts until approved). Fix it with ' +
+  '`npm install-scripts approve ffmpeg-static && npm rebuild ffmpeg-static`, or install ffmpeg on your system, or set FFMPEG_PATH.';
+
+let ffmpegChecked = false;
+
+/** Fails fast, with instructions, when no runnable ffmpeg exists. */
+export async function ensureFfmpeg(): Promise<void> {
+  if (ffmpegChecked) return;
+  await run(ffmpegPath(), ['-version'], { timeoutMs: 15_000 });
+  ffmpegChecked = true;
 }
 
 /** Runs a binary and resolves with stdout; rejects with the tail of stderr on failure. */
@@ -27,7 +42,8 @@ export function run(bin: string, args: string[], opts: { cwd?: string; timeoutMs
     child.stderr.on('data', (c: Buffer) => (err = (err + c.toString()).slice(-8000)));
     child.on('error', (e) => {
       if (timer) clearTimeout(timer);
-      reject((e as NodeJS.ErrnoException).code === 'ENOENT' ? new Error(`${bin} not found. Install ffmpeg or set FFMPEG_PATH.`) : e);
+      if ((e as NodeJS.ErrnoException).code !== 'ENOENT') return reject(e);
+      reject(new Error(bin === ffmpegPath() ? FFMPEG_MISSING_HELP : `${bin} not found.`));
     });
     child.on('close', (code) => {
       if (timer) clearTimeout(timer);

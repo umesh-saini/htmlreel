@@ -6,7 +6,7 @@ import { spawn } from 'node:child_process';
 import type { Browser } from 'puppeteer-core';
 import { computeLevels } from './audio.js';
 import { launchBrowser, openComposition, serve, type BrowserOptions, type CompositionPage, type Engine, type NetworkPolicy } from './browser.js';
-import { ffmpeg, ffmpegPath, probeDuration } from './ffmpeg.js';
+import { ensureFfmpeg, ffmpeg, ffmpegPath, probeDuration } from './ffmpeg.js';
 import { buildHtml, type Caption, type ReelConfig } from './html.js';
 import { preset as presetSize, type PresetName } from './presets.js';
 
@@ -172,6 +172,7 @@ export async function renderVideo(o: RenderVideoOptions): Promise<RenderResult> 
   const outW = Math.round(width * scale);
   const outH = Math.round(height * scale);
   if (outW % 2 || outH % 2) throw new Error(`H.264 needs an even width and height (got ${outW}x${outH}).`);
+  await ensureFfmpeg();
 
   const audio: AudioOptions | null = typeof o.audio === 'string' ? { path: o.audio } : (o.audio ?? null);
   if (audio && !fs.existsSync(audio.path)) throw new Error(`Audio not found: ${audio.path}`);

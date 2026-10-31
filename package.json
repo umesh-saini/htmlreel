@@ -1,6 +1,6 @@
 {
   "name": "htmlreel",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Render HTML/CSS into MP4 videos for YouTube, Shorts, Instagram Reels and TikTok. Deterministic frame-by-frame capture in headless Chrome, parallel workers, FFmpeg encoding, word-by-word captions and audio-reactive animation.",
   "keywords": [
     "html-to-video",

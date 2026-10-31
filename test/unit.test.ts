@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { binaryArch, buildHtml, captionsFromText, findHeadlessShell, findPeakWindow, launchHelp, levelsFromPcm, parseSubtitles, preset, PRESETS, serve } from '../src/index.js';
+import { binaryArch, buildHtml, captionsFromText, findHeadlessShell, findPeakWindow, launchHelp, levelsFromPcm, parseSubtitles, preset, PRESETS, renderVideo, serve } from '../src/index.js';
 
 test('buildHtml injects config + runtime first thing in <head>, safely escaped', () => {
   const html = buildHtml('<html><head><title>x</title></head><body></body></html>', { duration: 3, data: { evil: '</script><script>alert(1)</script>', ls: '\u2028' } });
@@ -124,5 +124,19 @@ test('the file server serves virtual files and the root folder, and blocks path 
     assert.equal((await get('/missing.png')).status, 404);
   } finally {
     await s.close();
+  }
+});
+
+test('a missing ffmpeg fails fast with instructions (npm 12+ skips ffmpeg-static\'s download)', async () => {
+  const prev = process.env.FFMPEG_PATH;
+  process.env.FFMPEG_PATH = path.join(os.tmpdir(), 'no-such-dir', 'ffmpeg');
+  try {
+    await assert.rejects(
+      renderVideo({ html: '<p>x</p>', width: 64, height: 64, duration: 1, output: path.join(os.tmpdir(), 'never.mp4') }),
+      /install-scripts approve ffmpeg-static/
+    );
+  } finally {
+    if (prev === undefined) delete process.env.FFMPEG_PATH;
+    else process.env.FFMPEG_PATH = prev;
   }
 });

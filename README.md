@@ -64,6 +64,10 @@ npm install htmlreel
 npx htmlreel install-browser   # one-time download: the fast, deterministic headless Chrome
 ```
 
+> **npm 12+:** npm no longer runs install scripts by default, so the bundled FFmpeg isn't downloaded. Allow it once:
+> `npm install-scripts approve ffmpeg-static && npm rebuild ffmpeg-static`
+> (or install FFmpeg on your system, or point `FFMPEG_PATH` at one). `npx htmlreel doctor` shows which FFmpeg is used.
+
 Node.js 20+. FFmpeg is bundled ([ffmpeg-static](https://github.com/eugeneware/ffmpeg-static)). If you skip `install-browser`, htmlreel falls back to any installed Chrome/Chromium using screenshot capture, which also works but is about 2× slower. Check what it found with `npx htmlreel doctor`.
 
 ## Quick start: CLI

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+- Works when npm 12+ skips ffmpeg-static's install script: htmlreel falls back to a system `ffmpeg`, and otherwise fails before launching browsers with the exact fix (`npm install-scripts approve ffmpeg-static && npm rebuild ffmpeg-static`) instead of `Encoder failed: exit -2`.
+
 ## 0.1.0
 
 First release, extracted from SangeetFlow's video renderer.
