@@ -5,7 +5,7 @@ Thanks for helping. The most useful contributions are bug reports with a **minim
 ## Setup
 
 ```bash
-git clone https://github.com/umeshsaini8085/htmlreel && cd htmlreel
+git clone https://github.com/umesh-saini/htmlreel && cd htmlreel
 npm install
 npx tsx src/cli.ts install-browser   # once
 npm test                             # unit tests + real renders in Chrome
@@ -32,4 +32,4 @@ npm run cli -- render examples/youtube-intro/index.html --preset hd --duration 6
 ## Releasing (maintainers)
 
 1. Update `CHANGELOG.md`, bump `version` in `package.json`.
-2. `git tag vX.Y.Z && git push --tags`. The Release workflow publishes to npm with provenance.
+2. `git tag vX.Y.Z && git push --tags`. The Release workflow publishes to npm with provenance (via npm trusted publishing, or an `NPM_TOKEN` secret).

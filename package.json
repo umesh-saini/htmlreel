@@ -26,10 +26,10 @@
   "author": "Umesh Saini",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/umeshsaini8085/htmlreel.git"
+    "url": "git+https://github.com/umesh-saini/htmlreel.git"
   },
-  "homepage": "https://github.com/umeshsaini8085/htmlreel#readme",
-  "bugs": "https://github.com/umeshsaini8085/htmlreel/issues",
+  "homepage": "https://github.com/umesh-saini/htmlreel#readme",
+  "bugs": "https://github.com/umesh-saini/htmlreel/issues",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

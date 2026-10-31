@@ -2,7 +2,7 @@
 
 **Write a web page. Get a video.** Render HTML & CSS into MP4s for **YouTube, Shorts, Instagram Reels and TikTok**.
 
-[![CI](https://github.com/umeshsaini8085/htmlreel/actions/workflows/ci.yml/badge.svg)](https://github.com/umeshsaini8085/htmlreel/actions/workflows/ci.yml)
+[![CI](https://github.com/umesh-saini/htmlreel/actions/workflows/ci.yml/badge.svg)](https://github.com/umesh-saini/htmlreel/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/htmlreel.svg)](https://www.npmjs.com/package/htmlreel)
 [![license](https://img.shields.io/npm/l/htmlreel.svg)](LICENSE)
 
@@ -286,7 +286,7 @@ Environment variables: `HTMLREEL_CHROME` (browser path), `HTMLREEL_BROWSER_DIR`,
 
 ## Where it comes from
 
-htmlreel is the render engine of **SangeetFlow**, a multi-user YouTube automation platform: AI-designed music and lyric videos, narrated presenter videos and Shorts, rendered and published on a schedule. Its MCP connector (Claude and ChatGPT can create videos in it) is open source too: [mcp-auth-kit](https://github.com/umeshsaini8085/mcp-auth-kit).
+htmlreel is the render engine of **SangeetFlow**, a multi-user YouTube automation platform: AI-designed music and lyric videos, narrated presenter videos and Shorts, rendered and published on a schedule. Its MCP connector (Claude and ChatGPT can create videos in it) is open source too: [mcp-auth-kit](https://github.com/umesh-saini/mcp-auth-kit).
 
 ## Contributing
 
